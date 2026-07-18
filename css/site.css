@@ -1,0 +1,780 @@
+/* ==========================================
+   He Rengao - Printmaking Artist
+   Site Stylesheet
+   ========================================== */
+
+:root {
+    --bg: #fbfbf8; /* warm white */
+    --fg: #111111; /* near-black */
+    --muted: #5a5a5a;
+    --line: rgba(17,17,17,.10);
+    --line-strong: rgba(17,17,17,.16);
+    --pad-desktop: 64px;
+    --pad-mobile: 18px;
+    --nav-h: 72px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    color: var(--fg);
+    background: var(--bg);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:focus-visible, button:focus-visible {
+    outline: 2px solid rgba(17,17,17,.45);
+    outline-offset: 3px;
+    border-radius: 10px;
+}
+
+/* =========================
+   Top Navigation (Layout A)
+   ========================= */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    background: transparent;
+    transition: background-color .2s ease, border-color .2s ease, backdrop-filter .2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+/* subtle "after scroll" state */
+.site-header.is-scrolled {
+    background: rgba(251,251,248,.92);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--line);
+}
+
+.nav-wrap {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--pad-desktop);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    letter-spacing: .02em;
+    font-weight: 520;
+    font-size: 19px;
+    white-space: nowrap;
+}
+
+/* Optional small subtitle line (remove if you prefer) */
+.brand small {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 14.5px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.nav-links a {
+    position: relative;
+    padding: 8px 2px;
+    color: rgba(17,17,17,.88);
+    transition: color .15s ease;
+}
+
+.nav-links a:hover {
+    color: rgba(17,17,17,1);
+}
+
+/* underline on hover */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    height: 1px;
+    background: rgba(17,17,17,.55);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .18s ease;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+}
+
+/* active link underline (set aria-current="page") */
+.nav-links a[aria-current="page"] {
+    color: rgba(17,17,17,1);
+}
+
+.nav-links a[aria-current="page"]::after {
+    transform: scaleX(1);
+    background: rgba(17,17,17,.70);
+}
+
+/* Mobile menu button */
+.menu-btn {
+    display: none;
+    appearance: none;
+    border: 1px solid rgba(17,17,17,.16);
+    background: rgba(255,255,255,.55);
+    height: 40px;
+    width: 44px;
+    border-radius: 999px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+.menu-btn:hover {
+    border-color: rgba(17,17,17,.22);
+    background: rgba(255,255,255,.72);
+}
+
+.menu-btn svg {
+    display: block;
+}
+
+/* =========================
+   Mobile Drawer
+   ========================= */
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    z-index: 1100;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(86vw, 360px);
+    background: rgba(251,251,248,.98);
+    border-left: 1px solid var(--line);
+    transform: translateX(100%);
+    transition: transform .22s ease;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-header {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--line);
+}
+
+.drawer-title {
+    font-weight: 560;
+    letter-spacing: .02em;
+}
+
+.drawer-close {
+    appearance: none;
+    border: 1px solid rgba(17,17,17,.16);
+    background: rgba(255,255,255,.65);
+    height: 36px;
+    width: 40px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.drawer-nav {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.drawer-nav a {
+    padding: 12px 10px;
+    border-radius: 14px;
+    font-size: 16px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,.92);
+}
+
+.drawer-nav a:hover {
+    background: rgba(17,17,17,.06);
+}
+
+.drawer-nav a[aria-current="page"] {
+    background: rgba(17,17,17,.08);
+}
+
+/* Open states controlled by [data-menu-open="true"] on body */
+body[data-menu-open="true"] .drawer-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+body[data-menu-open="true"] .drawer {
+    transform: translateX(0);
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 860px) {
+    .nav-wrap {
+        padding: 0 var(--pad-mobile);
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .brand {
+        font-size: 18px;
+    }
+
+    .brand small {
+        display: none;
+    }
+    /* optional: hide subtitle on mobile */
+}
+
+/* Demo page content spacing */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px var(--pad-desktop);
+}
+
+@media (max-width: 860px) {
+    main {
+        padding: 32px var(--pad-mobile);
+    }
+}
+
+.placeholder {
+    border: 1px dashed var(--line-strong);
+    border-radius: 18px;
+    padding: 22px;
+    color: var(--muted);
+}
+
+/* =========================
+   Works Page
+   ========================= */
+.page-header {
+    max-width: 1100px;
+    margin: 0 auto 48px;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    margin: 0 0 12px;
+}
+
+.page-intro {
+    font-size: 14.5px;
+    color: rgba(17,17,17,.65);
+    line-height: 1.6;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 36px 28px;
+}
+
+.work-card figure {
+    margin: 0;
+}
+
+.work-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f2f2ee;
+}
+
+.work-card figcaption {
+    margin-top: 10px;
+    font-size: 13.5px;
+    line-height: 1.4;
+}
+
+.work-title {
+    display: block;
+    font-weight: 500;
+}
+
+.work-meta {
+    display: block;
+    color: rgba(17,17,17,.6);
+    margin-top: 2px;
+}
+
+/* hover – 非按钮感 */
+.work-card a:hover .work-title {
+    text-decoration: underline;
+}
+
+/* =========================
+   Single Work Page
+   ========================= */
+.work-header {
+    max-width: 1100px;
+    margin: 0 auto 48px;
+}
+
+.work-title {
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    margin: 0 0 10px;
+}
+
+.work-meta {
+    font-size: 14px;
+    color: rgba(17,17,17,.65);
+    display: flex;
+    gap: 16px;
+}
+
+.work-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+}
+
+.work-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f2f2ee;
+}
+
+.image-caption {
+    font-size: 12.5px;
+    color: rgba(17,17,17,.55);
+    margin-top: 6px;
+}
+
+.work-info {
+    font-size: 14px;
+}
+
+.work-specs {
+    margin: 0;
+}
+
+.work-specs div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    padding: 6px 0;
+}
+
+.work-specs dt {
+    font-weight: 500;
+    color: rgba(17,17,17,.85);
+}
+
+.work-specs dd {
+    margin: 0;
+    color: rgba(17,17,17,.75);
+}
+
+.work-note {
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(17,17,17,.7);
+}
+
+.work-nav {
+    max-width: 1100px;
+    margin: 64px auto 0;
+    font-size: 14px;
+}
+
+.work-nav a {
+    color: rgba(17,17,17,.75);
+}
+
+.work-nav a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 860px) {
+    .work-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .work-title {
+        font-size: 26px;
+    }
+}
+
+/* =========================
+   Home Page
+   ========================= */
+.home-hero {
+    max-width: 1100px;
+    margin: 0 auto 14px;
+}
+
+.hero-figure {
+    margin: 0;
+}
+
+.hero-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f2f2ee;
+}
+
+.hero-caption {
+    margin-top: 10px;
+    line-height: 1.35;
+}
+
+.hero-title {
+    display: block;
+    font-weight: 500;
+    letter-spacing: .02em;
+}
+
+.hero-meta {
+    display: block;
+    margin-top: 2px;
+    color: rgba(17,17,17,.60);
+    font-size: 13.5px;
+}
+
+/* 1-line snapshot: subtle, "publication" feel */
+.home-snapshot {
+    max-width: 1100px;
+    margin: 0 auto 44px;
+}
+
+.artist-intro {
+    margin: 0;
+    max-width: 72ch; /* keeps it elegant on wide screens */
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: rgba(17,17,17,.68);
+    letter-spacing: .01em;
+}
+
+/* Section header */
+.home-works {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.section-header h2 {
+    margin: 0 0 18px;
+    font-size: 16px;
+    font-weight: 520;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,.78);
+}
+
+.section-footer {
+    margin-top: 22px;
+    font-size: 14px;
+}
+
+.section-footer a {
+    color: rgba(17,17,17,.72);
+}
+
+.section-footer a:hover {
+    text-decoration: underline;
+}
+
+.home-about {
+    max-width: 1100px;
+    margin: 48px auto 0;
+}
+
+/* Responsive: keep the hero + snapshot breathing */
+@media (max-width: 860px) {
+    .home-hero {
+        margin-bottom: 12px;
+    }
+
+    .home-snapshot {
+        margin-bottom: 34px;
+    }
+
+    .artist-intro {
+        font-size: 14px;
+    }
+}
+
+/* =========================
+   About Page
+   ========================= */
+.about-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 52px;
+    align-items: start;
+}
+
+/* Left media */
+.about-media {}
+
+.about-figure {
+    margin: 0;
+}
+
+.about-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #f2f2ee;
+}
+
+.about-caption {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: rgba(17,17,17,.55);
+    letter-spacing: .02em;
+}
+
+/* Right text */
+.about-text {
+    max-width: 75ch;
+}
+
+.about-lede {
+    margin: 0 0 18px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(17,17,17,.75);
+    letter-spacing: .01em;
+}
+
+.about-body p {
+    margin: 0 0 14px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: rgba(17,17,17,.70);
+    letter-spacing: .01em;
+}
+
+.about-body a {
+    color: rgba(17,17,17,.82);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.about-body a:hover {
+    color: rgba(17,17,17,1);
+}
+
+/* Quick links row */
+.about-links {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 20px;
+    font-size: 14px;
+}
+
+.about-links a {
+    color: rgba(17,17,17,.72);
+}
+
+.about-links a:hover {
+    text-decoration: underline;
+}
+
+/* About page responsive */
+@media (max-width: 860px) {
+    .about-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+    
+    .page-header {
+        margin-bottom: 18px;
+    }
+}
+
+/* =========================
+   CV Page
+   ========================= */
+.cv-actions {
+    max-width: 1100px;
+    margin: 0 auto 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    font-size: 14px;
+}
+
+.cv-link {
+    color: rgba(17,17,17,.72);
+}
+
+.cv-link:hover {
+    text-decoration: underline;
+}
+
+.cv {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.cv-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid rgba(17,17,17,.10);
+}
+
+.cv-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 22px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(17,17,17,.08);
+}
+
+.cv-year {
+    font-size: 13.5px;
+    letter-spacing: .10em;
+    text-transform: uppercase;
+    color: rgba(17,17,17,.62);
+    padding-top: 2px;
+    white-space: nowrap;
+}
+
+.cv-content p {
+    margin: 0 0 10px;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: rgba(17,17,17,.72);
+    letter-spacing: .01em;
+}
+
+.cv-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* CV page responsive */
+@media (max-width: 860px) {
+    .cv-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .cv-year {
+        padding-top: 0;
+    }
+}
+
+/* =========================
+   Contact Page
+   ========================= */
+.contact-block {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.contact-intro {
+    margin: 0 0 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(17,17,17,.72);
+    max-width: 65ch;
+}
+
+.contact-email {
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: .02em;
+}
+
+.contact-email a {
+    color: rgba(17,17,17,.88);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(17,17,17,.35);
+    padding-bottom: 2px;
+}
+
+.contact-email a:hover {
+    border-bottom-color: rgba(17,17,17,.75);
+}
+
+.contact-note {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: rgba(17,17,17,.55);
+}
+
+/* Contact page responsive */
+@media (max-width: 860px) {
+    .contact-block {
+        padding-top: 10px;
+    }
+    
+    .contact-email {
+        font-size: 16.5px;
+    }
+}
